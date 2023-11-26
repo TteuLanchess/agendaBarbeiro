@@ -43,7 +43,7 @@
         <p class="text-center">AGENDE SEU CORTE</p>
 
         <div class="text-center">
-            <img src="/imagens/logotrabaio.png" class="img-fluid" alt="logo-responsiva">
+            <img src="./imagens/logotrabaio.png" class="img-fluid" alt="logo-responsiva">
         </div>
     </div>
     <!-- Fecha Parte de cima -->
@@ -55,9 +55,30 @@
             <form class="form-group">
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Observações</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                    <textarea class="form-control" id="observacao" rows="3"
                         placeholder="Caso queira deixar alguma observação"></textarea>
                 </div>
+
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <form>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" id="nomepessoa" class="form-control" placeholder="Nome">
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" id="Telefone" class="form-control" placeholder="Telefone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
 
 
                 <div class="container-fluid">
@@ -118,50 +139,30 @@
 
                     <script>
 
-                        function enviarDadosParaAgenda() {
-                            // Obtém os dados do formulário
-                            //var nome = document.querySelector("#nome").value;
-                            // var email = document.querySelector("#email").value;
-                            var data = document.querySelector("#data").value;
-                            var hora = document.querySelector("#hora").value;
+                        function webhoo() {
+
+                            var body = {
+                                data: document.querySelector("#data").value,
+                                hora: document.querySelector("#hora").value,
 
 
-                            // Cria um objeto evento
-                            var evento =
-                            {
-                                //title: nome,
-                                //start: new Date(),
-                                //end: new Date(),
-                                title: "cabeilo",
-                                start: new Date("2023-11-28" + "T" + "19:00:00-03:00"),
-                                end: new Date("2023-11-28" + "T" + "20:00:00-03:00"),
+
+
                             };
-                            console.log(evento);
 
-                            // Envia o evento para o Google Agenda
-                            gapi.client.init({
-                                apiKey: 'AIzaSyDzH9T8N79VpdJA15DxbQUGLtxrN_AoX2s',
-                                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-                            }).then(function () {
-                                // Adiciona o evento ao Google Agenda
-                                return gapi.client.calendar.events.insert({
-                                    calendarId: "primary",  // "primary" refere-se ao calendário padrão do usuário autenticado
-                                    resource: evento,
-                                });
-                            }).then(function (response) {
-                                console.log('Evento adicionado:', response);
-                                // Leva a pessoa para a página de obrigado ou faça outras ações necessárias.
-                            }).catch(function (error) {
-                                console.error('Erro ao adicionar evento:', error);
-                            });
-
-                            // Leva a pessoa para a página de obrigado
-                            //window.location.href = "obrigado.html";
+                            // Envia dados Para Webhook da plataforma MAKE INTEGROMAT para adicionar dados ao google agenda
+                            fetch('https://hook.us1.make.com/vqrblkbhkol3ww1x2v46yc5ppeivknzh',
+                                {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(body),
+                                })
                         }
+
                     </script>
 
                     <div class="container-fluid">
-                        <button type="button" class="btn btn-info" onclick="enviarDadosParaAgenda()"> Agendar </button>
+                        <button type="button" class="btn btn-info" onclick="webhoo()"> Agendar </button>
 
                     </div>
                 </div>
