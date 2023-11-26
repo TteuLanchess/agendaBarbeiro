@@ -22,7 +22,10 @@
         crossorigin="anonymous"></script>
 
     <!-- Fecha Estrutura Padrão botstrap -->
+
+    <script src="https://apis.google.com/js/api.js"></script>
     <title>Title</title>
+
 </head>
 
 <body>
@@ -81,14 +84,14 @@
 
                 <div class="container-fluid">
                     <div class="form-group">
-                        <select class="custom-select" required>
+                        <select class="custom-select" required id="data">
                             <option value="">Escolha a Data Desejada</option>
-                            <option value="1">28/11</option>
-                            <option value="2">29/11</option>
-                            <option value="3">30/11</option>
-                            <option value="4">01/12</option>
-                            <option value="5">04/12</option>
-                            <option value="6">05/12</option>
+                            <option value="28/11">28/11</option>
+                            <option value="29/11">29/11</option>
+                            <option value="30/11">30/11</option>
+                            <option value="01/12">01/12</option>
+                            <option value="04/12">04/12</option>
+                            <option value="05/12">05/12</option>
                         </select>
                         <div class="invalid-feedback">Escolha data Desejada</div>
                     </div>
@@ -96,52 +99,69 @@
 
                 <div class="container-fluid">
                     <div class="form-group">
-                        <select class="custom-select" required>
+                        <select class="custom-select" id="hora" required>
                             <option value="">Escolha o Horário</option>
-                            <option value="1">10:00h</option>
-                            <option value="2">11:00h</option>
-                            <option value="3">13:00h</option>
-                            <option value="4">14:00h</option>
-                            <option value="5">15:00h</option>
-                            <option value="6">16:00h</option>
-                            <option value="7">17:00h</option>
-                            <option value="8">18:00h</option>
-                            <option value="9">19:00h</option>
+                            <option value="10:00">10:00h</option>
+                            <option value="11:00">11:00h</option>
+                            <option value="13:00">13:00h</option>
+                            <option value="14:00">14:00h</option>
+                            <option value="15:00">15:00h</option>
+                            <option value="16:00">16:00h</option>
+                            <option value="17:00">17:00h</option>
+                            <option value="18:00">18:00h</option>
+                            <option value="19:00">19:00h</option>
                         </select>
                         <div class="invalid-feedback">Escolha data Desejada</div>
 
                     </div>
 
+
                     <script>
+
                         function enviarDadosParaAgenda() {
                             // Obtém os dados do formulário
-                            var nome = document.querySelector("#nome").value;
-                            var email = document.querySelector("#email").value;
+                            //var nome = document.querySelector("#nome").value;
+                            // var email = document.querySelector("#email").value;
                             var data = document.querySelector("#data").value;
                             var hora = document.querySelector("#hora").value;
+
 
                             // Cria um objeto evento
                             var evento =
                             {
-                                title: nome,
-                                start: new Date(data + "T" + hora),
-                                end: new Date(data + "T" + hora + "+01:00"),
+                                //title: nome,
+                                //start: new Date(),
+                                //end: new Date(),
+                                title: "cabeilo",
+                                start: new Date("2023-11-28" + "T" + "19:00:00-03:00"),
+                                end: new Date("2023-11-28" + "T" + "20:00:00-03:00"),
                             };
+                            console.log(evento);
 
                             // Envia o evento para o Google Agenda
-                            var service = new google.api.services.calendar.Calendar();
-                            service.events().insert({
-                                calendarId: "CALENDAR_ID",
-                                resource: evento,
-                            }).execute();
+                            gapi.client.init({
+                                apiKey: 'AIzaSyDzH9T8N79VpdJA15DxbQUGLtxrN_AoX2s',
+                                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+                            }).then(function () {
+                                // Adiciona o evento ao Google Agenda
+                                return gapi.client.calendar.events.insert({
+                                    calendarId: "primary",  // "primary" refere-se ao calendário padrão do usuário autenticado
+                                    resource: evento,
+                                });
+                            }).then(function (response) {
+                                console.log('Evento adicionado:', response);
+                                // Leva a pessoa para a página de obrigado ou faça outras ações necessárias.
+                            }).catch(function (error) {
+                                console.error('Erro ao adicionar evento:', error);
+                            });
 
                             // Leva a pessoa para a página de obrigado
-                            window.location.href = "obrigado.html";
+                            //window.location.href = "obrigado.html";
                         }
                     </script>
 
                     <div class="container-fluid">
-                        <button type="reset" class="btn btn-info" onclick=""> Agendar </button>
+                        <button type="button" class="btn btn-info" onclick="enviarDadosParaAgenda()"> Agendar </button>
 
                     </div>
                 </div>
