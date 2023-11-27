@@ -29,28 +29,18 @@
 </head>
 
 <body>
-    <!-- Abre Estrutura Padrão botstrap -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <!-- Fecha Estrutura Padrão botstrap -->
 
-
-
-    <!-- Abre Parte de cima -->
     <div class="p-3 mb-2 bg-secondary text-white">
-
         <p class="text-center">AGENDE SEU CORTE</p>
-
         <div class="text-center">
             <img src="./imagens/final.png" class="img-fluid" alt="logo-responsiva">
         </div>
     </div>
-    <!-- Fecha Parte de cima -->
-
-
     <div class="p-3 mb-2 bg-secondary text-white">
-
         <div class="container-fluid">
             <form class="form-group">
                 <div class="form-group">
@@ -60,53 +50,21 @@
                 </div>
 
         </div>
-
         <div class="form-group mx-sm-3 mb-2">
             <form>
                 <div class="row">
                     <div class="col">
-                        <input type="text" id="nomepessoa" class="form-control" placeholder="Nome">
-                    </div>
-                </div>
+                        <input type="text" id="nomepessoa" class="my-sm-1 form-control" placeholder="Nome">
+                        <input type="tel" id="Telefone" class="my-sm-2 form-control" placeholder="Telefone">
+                        <label for="servicos">Escolha um serviço:</label>
+                        <select class="my-sm-1 custom-select" id="servicos" name="servicos" required>
+                        <option value="" disabled selected>Selecione um serviço</option>
+                        <option value="cabelo">Cabelo - R$30,00</option>
+                        <option value="barba">Barba - R$10,00</option>
+                        <option value="cabelo_barba">Cabelo e Barba - R$35,00</option>
+                        </select>
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="row">
-                            <div class="col">
-                                <input type="tel" id="Telefone" class="form-control" placeholder="Telefone">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="container-fluid">
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation2"
-                            name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation2">Cabelo - R$30,00</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation3"
-                            name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation3">Barba - R$10,00</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="customControlValidation4"
-                            name="radio-stacked" required>
-                        <label class="custom-control-label" for="customControlValidation4">Cabelo e Barba - R$35,00
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-                <div class="container-fluid">
-                    <div class="form-group">
-                        <select class="custom-select" required id="data">
+                        <select class="my-sm-1 custom-select" required id="data">
                             <option value="">Escolha a Data Desejada</option>
                             <option value="28/11">28/11</option>
                             <option value="29/11">29/11</option>
@@ -115,13 +73,7 @@
                             <option value="04/12">04/12</option>
                             <option value="05/12">05/12</option>
                         </select>
-                        <div class="invalid-feedback">Escolha data Desejada</div>
-                    </div>
-                </div>
-
-                <div class="container-fluid">
-                    <div class="form-group">
-                        <select class="custom-select" id="hora" required>
+                        <select class="my-sm-1 custom-select" id="hora" required>
                             <option value="">Escolha o Horário</option>
                             <option value="10:00">10:00h</option>
                             <option value="11:00">11:00h</option>
@@ -134,16 +86,10 @@
                             <option value="19:00">19:00h</option>
                         </select>
                         <div class="invalid-feedback">Escolha data Desejada</div>
-
                     </div>
-
-
                     <script>
-
-
                         //a função webhoo ativa um webhook passando os dados para uma automação que irá colocar o agendamento no google agenda do barbeiro
                         function webhoo() {
-
                             //criando um arquivo para ser transformado em json
                             var body = {
                                 data: document.querySelector("#data").value,
@@ -151,10 +97,8 @@
                                 nome: document.querySelector("#nomepessoa").value,
                                 telefone: document.querySelector("#Telefone").value,
                                 obersavacao: document.querySelector("#observacao").value,
-
-
+                                servicos: document.querySelector("#servicos").value,
                             };
-
                             // Envia dados Para Webhook da plataforma MAKE INTEGROMAT para adicionar dados ao google agenda
                             fetch('https://hook.us1.make.com/vqrblkbhkol3ww1x2v46yc5ppeivknzh',
                                 {
@@ -162,56 +106,24 @@
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(body),
                                 })
-
-
-
                             window.location.href = "obrigado.html";
-
-
-
                         }
-
                     </script>
-
-                    <div class="container-fluid">
-                        <button type="button" class="btn btn-info" onclick="webhoo()"> Agendar </button>
-
-                    </div>
+                        <div class="container-fluid">
+                            <button type="button" class="btn btn-info" onclick="webhoo()"> Agendar </button>
+                        </div>
                 </div>
-
-
-
-
-
-
-
-
             </form>
-
         </div>
-
-
-
-
     </div>
 
+    
 </body>
-
-
 <footer>
-
-
-
     <div class="p-3 mb-2 bg-secondary text-white">
         <div class="text-center">
             <p class="text-center">Copyright © 2023 Agenda Barbearia</p>
-            <p class="text-center">Feito Por: </p>
         </div>
-
     </div>
-
-
-
 </footer>
-
 </html>
